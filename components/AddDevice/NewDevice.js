@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import AddDeviceModal from './AddDeviceModal';
 import styles from "./Style";
-import DevicesList from '../Devices/DevicesList';
 
-export default function AddNewDevice() {
+export default function AddNewDevice({ fetchDevices }) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [_, setRefresh] = useState(false); // Força a re-renderização
 
     const handleDeviceAdded = () => {
-        setRefresh(prev => !prev); // Alterna o estado para forçar atualização
+        fetchDevices(); // Atualiza a lista de dispositivos
     };
 
     return (
@@ -19,10 +17,7 @@ export default function AddNewDevice() {
             </TouchableOpacity>
             <AddDeviceModal
                 visible={modalVisible}
-                onClose={() => {
-                    setModalVisible(false);
-                    handleDeviceAdded();
-                }}
+                onClose={() => setModalVisible(false)}
                 onDeviceAdded={handleDeviceAdded}
             />
         </View>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { db } from '../../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
-import styles from './Style'; // Importe os estilos
+import styles from './Style';
 
 export default function AddDeviceModal({ visible, onClose, onDeviceAdded }) {
     const [deviceName, setDeviceName] = useState('');
@@ -17,7 +17,7 @@ export default function AddDeviceModal({ visible, onClose, onDeviceAdded }) {
             setDeviceName('');
             setLocation('');
             onDeviceAdded();
-            setTimeout(onClose, 3000);
+            setTimeout(onClose, 500);
         }
     };
 

@@ -3,13 +3,8 @@ import { View, TouchableOpacity, Text } from "react-native";
 import RemoveDeviceModal from './RemoveDeviceModal';
 import styles from "./Style";
 
-export default function RemoveDeviceManager() {
+export default function RemoveDeviceManager({ devices, fetchDevices }) {
     const [modalVisible, setModalVisible] = useState(false);
-    const [_, setRefresh] = useState(false); // Força a re-renderização
-
-    const handleDeviceRemoved = () => {
-        setRefresh(prev => !prev); // Alterna o estado para forçar atualização
-    };
 
     return (
         <View style={styles.container}>
@@ -18,11 +13,12 @@ export default function RemoveDeviceManager() {
             </TouchableOpacity>
             <RemoveDeviceModal
                 visible={modalVisible}
-                onClose={() => {
+                onClose={() => setModalVisible(false)}
+                onDeviceRemoved={() => {
+                    fetchDevices(); // Atualiza a lista após remoção
                     setModalVisible(false);
-                    handleDeviceRemoved();
                 }}
-                onDeviceRemoved={handleDeviceRemoved}
+                devices={devices} // Passa a lista de dispositivos
             />
         </View>
     );

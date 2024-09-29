@@ -5,11 +5,13 @@ import DevicesList from './components/Devices/DevicesList';
 import AddNewDevice from './components/AddDevice/NewDevice';
 import RemoveDeviceManager from './components/RemoveDevice/DeleteDevice';
 import Footer from './components/Footer/Footer';
+import { db } from './firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [devices, setDevices] = useState([]);
-  
+
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -33,15 +35,19 @@ export default function App() {
     setDevices(deviceList);
   };
 
+  useEffect(() => {
+    fetchDevices();
+  }, []);
+
   if (!fontsLoaded) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
   return (
     <View style={styles.container}>
-      <DevicesList devices={devices} fetchDevices={fetchDevices} />
+      <DevicesList devices={devices} />
       <AddNewDevice fetchDevices={fetchDevices} />
-      <RemoveDeviceManager fetchDevices={fetchDevices} />
+      <RemoveDeviceManager devices={devices} fetchDevices={fetchDevices} />
       <Footer />
     </View>
   );
