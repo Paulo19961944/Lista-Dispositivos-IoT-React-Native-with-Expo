@@ -1,21 +1,26 @@
+// IMPORTA AS BIBLIOTECAS E COMPONENTES NECESSÁRIOS PARA O APP
 import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { db } from '../../firebaseConfig';
 import { collection, deleteDoc, doc } from 'firebase/firestore';
 import styles from './Style';
 
+// FUNÇÃO PARA ABRIR O MODAL
 export default function RemoveDeviceModal({ visible, onClose, onDeviceRemoved, devices }) {
-    const [selectedDeviceId, setSelectedDeviceId] = useState(null);
+    const [selectedDeviceId, setSelectedDeviceId] = useState(null); // Define a ID dos dispositivos como nulo
 
+    // FUNÇÃO PARA REMOVER O DISPOSITIVO
     const handleRemoveDevice = async () => {
+        // SE TIVER ALGUM DISPOSITIVO SELECIONADO
         if (selectedDeviceId) {
-            await deleteDoc(doc(db, 'Dispositivos', selectedDeviceId));
-            setSelectedDeviceId(null);
+            await deleteDoc(doc(db, 'Dispositivos', selectedDeviceId)); // Deleta o Documento
+            setSelectedDeviceId(null); // Seta a ID com Nula
             onDeviceRemoved(); // Chama a função para atualizar a lista de dispositivos
-            setTimeout(onClose, 500);
+            setTimeout(onClose, 500); // Espera 500 milisegundos para fechar
         }
     };
 
+    // RENDERIZA O MODAL
     return (
         <Modal transparent={true} animationType="slide" visible={visible}>
             <View style={styles.modalContainer}>

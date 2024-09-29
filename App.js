@@ -1,3 +1,4 @@
+// IMPORTA OS COMPONENTES E BIBLIOTECAS NECESSÁRIAS PRA O APP
 import { useState, useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
@@ -8,10 +9,12 @@ import Footer from './components/Footer/Footer';
 import { db } from './firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 
+// FUNÇÃO PRINCIPAL APP
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [devices, setDevices] = useState([]);
+  const [fontsLoaded, setFontsLoaded] = useState(false); // Define o estado das fontes com falso
+  const [devices, setDevices] = useState([]); // Define os dispositivos como vazio
 
+  // CARREGA AS FONTES DO SISTEMA DE FORMA ASSÍNCRONA
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
@@ -25,6 +28,7 @@ export default function App() {
     loadFonts();
   }, []);
 
+  // FUNÇÃO QUE CARREGA OS DISPOSITIVOS DO BANCO DE DADOS
   const fetchDevices = async () => {
     const devicesCollection = collection(db, 'Dispositivos');
     const deviceSnapshot = await getDocs(devicesCollection);
@@ -35,14 +39,17 @@ export default function App() {
     setDevices(deviceList);
   };
 
+  // CHAMA A FUNÇÃO QUE CARREGA OS DISPOSITIVOS
   useEffect(() => {
     fetchDevices();
   }, []);
 
+  // SE A FONTE NÃO FOR ENCONTRADA, APARECE UM ICONE DE LOADING
   if (!fontsLoaded) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
+  // CARREGA OS DISPOSITIVOS
   return (
     <View style={styles.container}>
       <DevicesList devices={devices} />
@@ -53,6 +60,7 @@ export default function App() {
   );
 }
 
+// ESTILIZAÇÃO DO CONTAINER
 const styles = StyleSheet.create({
   container: {
     flex: 1,
