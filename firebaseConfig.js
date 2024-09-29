@@ -3,13 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA7NL-a8SJailOTVCEreUL0ldlvXoyFh4s",
-    authDomain: "app-iot-react-native.firebaseapp.com",
-    projectId: "app-iot-react-native",
-    storageBucket: "app-iot-react-native.appspot.com",
-    messagingSenderId: "191814417974",
-    appId: "1:191814417974:web:b1ff2ed40207bfa6f1a297"
-  };
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
